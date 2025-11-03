@@ -3,7 +3,9 @@ import { ThemeSwitcher } from '@/components/theme-switcher'
 import { Button } from '@/components/ui/button'
 import React from 'react'
 
-function page() {
+async function page() {
+    await new Promise((resolve) => setTimeout(resolve, 10000))
+
   return (
     <div >
       <Button>subodh</Button>

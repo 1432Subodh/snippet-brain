@@ -3,7 +3,6 @@
 import * as React from "react"
 import { ArchiveX, Command, FolderOpenDot, Code2, Tag, Star } from "lucide-react"
 
-import { Label } from "@/components/ui/label"
 import {
   Sidebar,
   SidebarContent,
@@ -17,8 +16,8 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import { Switch } from "@/components/ui/switch"
 import { NavUser } from "./nav-user"
+import Link from "next/link"
 
 // Simplified data for Snippet Manager
 const data = {
@@ -61,9 +60,25 @@ const data = {
   ],
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export  function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const [activeItem, setActiveItem] = React.useState(data.navMain[0])
   const { setOpen } = useSidebar()
+  
+  
+  // const [isLoading, setIsLoading] = React.useState(true)
+  // React.useEffect(() => {
+  //   const loadData = async () => {
+  //     // Simulate loading for 10 seconds
+  //     await new Promise((resolve) => setTimeout(resolve, 2000))
+  //     setIsLoading(false)
+  //   }
+
+  //   loadData()
+  // }, [])
+
+  // if (isLoading) {
+  //   return <Loader />
+  // }
 
   return (
     <Sidebar
@@ -148,6 +163,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <div className="p-6 text-sm text-muted-foreground">
                 Select a category to view snippets.
               </div>
+              <Link href={'snippets/test'}>got to test</Link>
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>

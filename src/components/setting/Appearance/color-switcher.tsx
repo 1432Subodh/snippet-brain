@@ -11,17 +11,17 @@ import {
 } from "@/components/ui/select"
 import { cn } from "@/lib/utils"
 import { useThemeColor } from "../../../../context/theme-color-context"
-import { Moon, SunMedium, Palette, Laptop2 } from "lucide-react"
+import { Moon, SunMedium, Palette, Sparkles } from "lucide-react"
 
 const availableThemeColors = [
-  { name: "default", label: "Default", light: "bg-zinc-100", dark: "bg-zinc-800" },
-  { name: "red", label: "Red", light: "bg-red-500", dark: "bg-red-600" },
-  { name: "rose", label: "Rose", light: "bg-rose-500", dark: "bg-rose-600" },
-  { name: "blue", label: "Blue", light: "bg-blue-500", dark: "bg-blue-600" },
-  { name: "orange", label: "Orange", light: "bg-orange-500", dark: "bg-orange-600" },
-  { name: "yellow", label: "Yellow", light: "bg-yellow-400", dark: "bg-yellow-500" },
-  { name: "violet", label: "Violet", light: "bg-violet-500", dark: "bg-violet-600" },
-  { name: "green", label: "Green", light: "bg-green-500", dark: "bg-green-600" },
+  { name: "default", label: "Default", light: "bg-zinc-100", dark: "bg-zinc-800", gradient: "from-zinc-400 to-zinc-600" },
+  { name: "red", label: "Red", light: "bg-red-500", dark: "bg-red-600", gradient: "from-red-400 to-rose-600" },
+  { name: "rose", label: "Rose", light: "bg-rose-500", dark: "bg-rose-600", gradient: "from-pink-400 to-rose-600" },
+  { name: "blue", label: "Blue", light: "bg-blue-500", dark: "bg-blue-600", gradient: "from-blue-400 to-indigo-600" },
+  { name: "orange", label: "Orange", light: "bg-orange-500", dark: "bg-orange-600", gradient: "from-orange-400 to-red-600" },
+  { name: "yellow", label: "Yellow", light: "bg-yellow-400", dark: "bg-yellow-500", gradient: "from-yellow-300 to-orange-500" },
+  { name: "violet", label: "Violet", light: "bg-violet-500", dark: "bg-violet-600", gradient: "from-violet-400 to-purple-600" },
+  { name: "green", label: "Green", light: "bg-green-500", dark: "bg-green-600", gradient: "from-emerald-400 to-teal-600" },
 ]
 
 export function ColorSwitcher() {
@@ -30,71 +30,120 @@ export function ColorSwitcher() {
   const currentColor = availableThemeColors.find((c) => c.name === color)
 
   return (
-    <section className="space-y-8 pt-3">
-      {/* Header */}
-      <header className="flex items-center gap-2">
-        <Palette className="h-5 w-5 text-muted-foreground" />
-        <h2 className="text-base font-semibold tracking-tight">Theme & Color</h2>
+    <section className="space-y-8 pt-2 pb-4">
+      {/* Header with Gradient Accent */}
+      <header className="relative">
+        <div className="flex items-center gap-3 relative">
+          <div className={cn(
+            "p-2.5 rounded-xl bg-linear-to-br shadow-lg transition-all duration-300 bg-primary",
+            
+          )}>
+            <Palette className="h-5 w-5 text-primary-foreground" />
+          </div>
+          <div>
+            <h2 className="text-lg font-bold tracking-tight bg-linear-to-r from-foreground to-foreground/60 bg-clip-text text-transparent">
+              Appearance
+            </h2>
+            <p className="text-xs text-muted-foreground">Customize your experience</p>
+          </div>
+        </div>
+        <div className="absolute -bottom-3 left-0 right-0 h-px bg-linear-to-r from-transparent via-border to-transparent" />
       </header>
 
-      {/* Theme Mode Selector */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h4 className="text-sm font-medium text-muted-foreground">Theme Mode</h4>
-          <Select value={mode} onValueChange={setTheme} >
-            <SelectTrigger className="w-40 text-sm border-0">
-              <SelectValue placeholder="Select mode" />
-            </SelectTrigger>
-            <SelectContent className="">
-              <SelectItem value="light">
-                <div className="flex items-center gap-2">
-                  <SunMedium className="h-4 w-4 text-yellow-500" />
-                  Light
-                </div>
-              </SelectItem>
-              <SelectItem value="dark">
-                <div className="flex items-center gap-2">
-                  <Moon className="h-4 w-4 text-blue-400" />
-                  Dark
-                </div>
-              </SelectItem>
-              
-            </SelectContent>
-          </Select>
+      {/* Theme Mode Cards */}
+      <div className="space-y-3">
+        <div className="flex items-center gap-2">
+          <Sparkles className="h-3.5 w-3.5 text-muted-foreground" />
+          <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Theme Mode
+          </h4>
+        </div>
+        
+        <div className="grid grid-cols-2 gap-3">
+          <button
+            onClick={() => setTheme("light")}
+            className={cn(
+              "group relative overflow-hidden rounded-xl border-2 p-4 transition-all duration-300",
+              "hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]",
+              mode === "light"
+                ? "border-yellow-400 bg-linear-to-br from-yellow-50 to-orange-50 shadow-md"
+                : "border-border bg-background/50 backdrop-blur-sm hover:border-yellow-200"
+            )}
+          >
+            <div className="relative z-10 flex flex-col items-center gap-2">
+              <div className={cn(
+                "rounded-full p-3 transition-all duration-300",
+                mode === "light" 
+                  ? "bg-linear-to-br from-yellow-400 to-orange-500 shadow-lg shadow-yellow-500/50" 
+                  : "bg-muted group-hover:bg-yellow-100"
+              )}>
+                <SunMedium className={cn(
+                  "h-5 w-5 transition-colors",
+                  mode === "light" ? "text-white" : "text-muted-foreground"
+                )} />
+              </div>
+              <span className={cn(
+                "text-sm font-semibold",
+                mode === "light" ? "text-yellow-900" : "text-foreground"
+              )}>
+                Light
+              </span>
+            </div>
+            {mode === "light" && (
+              <div className="absolute inset-0 bg-linear-to-br from-yellow-400/10 to-orange-400/10 animate-pulse" />
+            )}
+          </button>
+
+          <button
+            onClick={() => setTheme("dark")}
+            className={cn(
+              "group relative overflow-hidden rounded-xl border-2 p-4 transition-all duration-300",
+              "hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]",
+              mode === "dark"
+                ? "border-blue-500 bg-linear-to-br from-slate-900 to-blue-950 shadow-md"
+                : "border-border bg-background/50 backdrop-blur-sm hover:border-blue-200"
+            )}
+          >
+            <div className="relative z-10 flex flex-col items-center gap-2">
+              <div className={cn(
+                "rounded-full p-3 transition-all duration-300",
+                mode === "dark" 
+                  ? "bg-linear-to-br from-blue-500 to-indigo-600 shadow-lg shadow-blue-500/50" 
+                  : "bg-muted group-hover:bg-blue-100"
+              )}>
+                <Moon className={cn(
+                  "h-5 w-5 transition-colors",
+                  mode === "dark" ? "text-white" : "text-muted-foreground"
+                )} />
+              </div>
+              <span className={cn(
+                "text-sm font-semibold",
+                mode === "dark" ? "text-blue-100" : "text-foreground"
+              )}>
+                Dark
+              </span>
+            </div>
+            {mode === "dark" && (
+              <div className="absolute inset-0 bg-linear-to-br from-blue-500/10 to-indigo-500/10 animate-pulse" />
+            )}
+          </button>
         </div>
       </div>
 
-      {/* Accent Color */}
+      <Separator className="my-6" />
+
+      {/* Accent Color Selector */}
       <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h4 className="text-sm font-medium text-muted-foreground">Accent Color</h4>
-          <Select value={color} onValueChange={setColor}>
-            <SelectTrigger className="w-40 text-sm border-0">
-              <SelectValue placeholder="Select color">
-                {currentColor?.label}
-              </SelectValue>
-            </SelectTrigger>
-            <SelectContent>
-              {availableThemeColors.map(({ name, label, light, dark }) => (
-                <SelectItem key={name} value={name}>
-                  <div className="flex items-center gap-2">
-                    <span
-                      className={cn(
-                        "h-4 w-4 rounded-full border",
-                        mode === "light" ? light : dark
-                      )}
-                    />
-                    {label}
-                  </div>
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+        <div className="flex items-center gap-2">
+          <Sparkles className="h-3.5 w-3.5 text-muted-foreground" />
+          <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Accent Color
+          </h4>
         </div>
 
-        {/* Color swatches */}
-        <div className="mt-2 grid grid-cols-5 gap-3 sm:grid-cols-6 md:grid-cols-8">
-          {availableThemeColors.map(({ name, label, light, dark }) => {
+        {/* Color Swatches Grid */}
+        <div className="grid grid-cols-4 gap-3 sm:grid-cols-4 md:grid-cols-8">
+          {availableThemeColors.map(({ name, label, light, dark, gradient }) => {
             const isActive = color === name
             return (
               <button
@@ -102,26 +151,59 @@ export function ColorSwitcher() {
                 onClick={() => setColor(name)}
                 title={label}
                 className={cn(
-                  "group relative flex h-10 w-10 items-center justify-center rounded-full border shadow-sm transition-all duration-200",
-                  "hover:scale-105 hover:ring-2 hover:ring-offset-2 hover:ring-muted-foreground/20",
+                  "group relative flex h-14 w-14 items-center justify-center rounded-2xl transition-all duration-300",
+                  "hover:scale-110 hover:shadow-xl active:scale-95",
                   isActive
-                    ? "ring-2 ring-offset-2 ring-offset-background ring-foreground/40"
-                    : "",
-                  mode === "light" ? light : dark
+                    ? "scale-105 shadow-xl ring-4 ring-offset-4 ring-offset-background"
+                    : "hover:ring-2 hover:ring-offset-2 hover:ring-offset-background"
                 )}
+                style={{
+                  boxShadow: isActive 
+                    ? `0 10px 40px -10px ${mode === "light" ? "rgba(0,0,0,0.3)" : "rgba(255,255,255,0.2)"}` 
+                    : undefined
+                }}
               >
+                <div className={cn(
+                  "absolute inset-0 rounded-2xl bg-linear-to-br transition-all duration-300",
+                  gradient,
+                  isActive ? "opacity-100" : "opacity-90 group-hover:opacity-100"
+                )} />
+                
                 {isActive && (
-                  <span className="absolute inset-0 flex items-center justify-center">
-                    <span className="h-2 w-2 rounded-full bg-white shadow" />
-                  </span>
+                  <>
+                    <span className="absolute inset-0 flex items-center justify-center z-10">
+                      <span className="h-3 w-3 rounded-full bg-white shadow-lg border-2 border-white/50 animate-pulse" />
+                    </span>
+                    <span className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-white shadow-md border-2 border-background z-20" />
+                  </>
                 )}
+                
+                {/* Hover glow effect */}
+                <div className={cn(
+                  "absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-300",
+                  "bg-white blur-md"
+                )} />
               </button>
             )
           })}
         </div>
-      </div>
 
-     
+        {/* Selected Color Label */}
+        <div className="flex items-center justify-between pt-2 px-1">
+          <div className="flex items-center gap-2">
+            <div className={cn(
+              "h-3 w-3 rounded-full border-2 border-white shadow-md bg-linear-to-br",
+              currentColor?.gradient
+            )} />
+            <span className="text-sm font-medium text-muted-foreground">
+              {currentColor?.label}
+            </span>
+          </div>
+          <span className="text-xs text-muted-foreground/60">
+            {availableThemeColors.length} colors
+          </span>
+        </div>
+      </div>
     </section>
   )
 }

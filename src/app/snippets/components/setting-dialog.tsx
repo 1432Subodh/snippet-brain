@@ -25,6 +25,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import {
+  Dialog,
   DialogContent,
   DialogDescription,
   DialogTitle,
@@ -40,7 +41,7 @@ import {
   SidebarProvider,
 } from "@/components/ui/sidebar"
 import { ColorSwitcher } from "@/components/setting/Appearance/color-switcher"
-
+import { Kbd } from "@/components/ui/kbd" // ✅ Import Kbd component
 
 // ----------------------
 // Settings Dialog
@@ -62,82 +63,100 @@ const data = {
   ],
 }
 
-export function SettingsDialog() {
+export function SettingsDialog({ settingsOpen, setSettingsOpen }: any) {
   const [active, setActive] = React.useState("Appearance")
 
+  // ✅ Keyboard shortcut (Ctrl + ,)
+  React.useEffect(() => {
+    const handleShortcut = (e: KeyboardEvent) => {
+      if ((e.altKey || e.metaKey) && e.key === "s") {
+        e.preventDefault()
+        setSettingsOpen((prev: boolean) => !prev)
+      }
+    }
+    window.addEventListener("keydown", handleShortcut)
+    return () => window.removeEventListener("keydown", handleShortcut)
+  }, [setSettingsOpen])
+
   return (
-    <DialogContent className="overflow-hidden p-0 md:max-h-[500px] md:max-w-[800px]">
-      <DialogTitle className="sr-only">Settings</DialogTitle>
-      <DialogDescription className="sr-only">
-        Customize your settings here.
-      </DialogDescription>
+    <>
+    
 
-      <SidebarProvider className="items-start">
-        {/* Sidebar */}
-        <Sidebar collapsible="none" className="hidden md:flex">
-          <SidebarContent>
-            <SidebarGroup>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {data.nav.map((item) => (
-                    <SidebarMenuItem key={item.name}>
-                      <SidebarMenuButton
-                        variant="custom"
-                        asChild
-                        isActive={item.name === active}
-                        onClick={() => setActive(item.name)}
-                      >
-                        <button className="flex w-full items-center gap-2">
-                          <item.icon size={18} />
-                          <span>{item.name}</span>
-                        </button>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  ))}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
-          </SidebarContent>
-        </Sidebar>
+      <Dialog open={settingsOpen} onOpenChange={setSettingsOpen}>
+        <DialogContent className="overflow-hidden p-0 md:max-h-[500px] md:max-w-[800px]">
+          <DialogTitle className="sr-only">Settings</DialogTitle>
+          <DialogDescription className="sr-only">
+            Customize your settings here.
+          </DialogDescription>
 
-        {/* Main Content */}
-        <main className="flex h-[480px] flex-1 flex-col overflow-hidden">
-          {/* Header */}
-          <header className="flex h-14 shrink-0 items-center gap-2 border-b">
-            <div className="flex items-center gap-2 px-4">
-              <Breadcrumb>
-                <BreadcrumbList>
-                  <BreadcrumbItem className="hidden md:block">
-                    <BreadcrumbLink href="#">Settings</BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator className="hidden md:block" />
-                  <BreadcrumbItem>
-                    <BreadcrumbPage>{active}</BreadcrumbPage>
-                  </BreadcrumbItem>
-                </BreadcrumbList>
-              </Breadcrumb>
-            </div>
-          </header>
+          <SidebarProvider className="items-start">
+            {/* Sidebar */}
+            <Sidebar collapsible="none" className="hidden md:flex">
+              <SidebarContent>
+                <SidebarGroup>
+                  <SidebarGroupContent>
+                    <SidebarMenu>
+                      {data.nav.map((item) => (
+                        <SidebarMenuItem key={item.name}>
+                          <SidebarMenuButton
+                            variant="custom"
+                            asChild
+                            isActive={item.name === active}
+                            onClick={() => setActive(item.name)}
+                          >
+                            <button className="flex w-full items-center gap-2">
+                              <item.icon size={18} />
+                              <span>{item.name}</span>
+                            </button>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      ))}
+                    </SidebarMenu>
+                  </SidebarGroupContent>
+                </SidebarGroup>
+              </SidebarContent>
+            </Sidebar>
 
-          {/* Body */}
-          <div className="flex flex-1 flex-col gap-4 overflow-y-auto p-4 pt-2">
-            {active === "Appearance" ? (
-              <div className="max-w-lg">
-                <ColorSwitcher />
+            {/* Main Content */}
+            <main className="flex h-[480px] flex-1 flex-col overflow-hidden">
+              {/* Header */}
+              <header className="flex h-14 shrink-0 items-center gap-2 border-b">
+                <div className="flex items-center gap-2 px-4">
+                  <Breadcrumb>
+                    <BreadcrumbList>
+                      <BreadcrumbItem className="hidden md:block">
+                        <BreadcrumbLink href="#">Settings</BreadcrumbLink>
+                      </BreadcrumbItem>
+                      <BreadcrumbSeparator className="hidden md:block" />
+                      <BreadcrumbItem>
+                        <BreadcrumbPage>{active}</BreadcrumbPage>
+                      </BreadcrumbItem>
+                    </BreadcrumbList>
+                  </Breadcrumb>
+                </div>
+              </header>
+
+              {/* Body */}
+              <div className="flex flex-1 flex-col gap-4 overflow-y-auto p-4 pt-2">
+                {active === "Appearance" ? (
+                  <div className="max-w-lg">
+                    <ColorSwitcher />
+                  </div>
+                ) : (
+                  <div className="flex flex-col gap-4">
+                    {Array.from({ length: 8 }).map((_, i) => (
+                      <div
+                        key={i}
+                        className="bg-muted/50 aspect-video max-w-3xl rounded-xl"
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
-            ) : (
-              <div className="flex flex-col gap-4">
-                {Array.from({ length: 8 }).map((_, i) => (
-                  <div
-                    key={i}
-                    className="bg-muted/50 aspect-video max-w-3xl rounded-xl"
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-        </main>
-      </SidebarProvider>
-    </DialogContent>
+            </main>
+          </SidebarProvider>
+        </DialogContent>
+      </Dialog>
+    </>
   )
 }

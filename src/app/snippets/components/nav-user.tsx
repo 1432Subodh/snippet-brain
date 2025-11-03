@@ -43,6 +43,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { SettingsDialog } from "./setting-dialog"
+import { Kbd, KbdGroup } from "@/components/ui/kbd"
 
 export function NavUser({
   user,
@@ -118,7 +119,17 @@ export function NavUser({
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setSettingsOpen(true)}>
                   <Settings2 />
-                  Settings
+                  <div className="flex justify-between w-full">
+                    <span >
+
+                      Settings
+                    </span>
+                    <KbdGroup className="text-xs scale-90">
+                      <Kbd>Alt</Kbd>
+                      <span>+</span>
+                      <Kbd>S</Kbd>
+                    </KbdGroup>
+                  </div>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
@@ -131,9 +142,7 @@ export function NavUser({
         </SidebarMenuItem>
       </SidebarMenu>
 
-      <Dialog open={settingsOpen} onOpenChange={setSettingsOpen}>
-        <SettingsDialog/>
-      </Dialog>
+      <SettingsDialog setSettingsOpen={setSettingsOpen} settingsOpen={settingsOpen} />
     </>
   )
 }
