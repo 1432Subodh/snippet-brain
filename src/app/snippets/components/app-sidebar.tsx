@@ -163,7 +163,7 @@ export  function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) 
               <div className="p-6 text-sm text-muted-foreground">
                 Select a category to view snippets.
               </div>
-              <Link href={'snippets/test'}>got to test</Link>
+              <Link href={'/snippets/test'}>got to test</Link>
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>

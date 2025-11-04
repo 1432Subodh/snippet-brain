@@ -5,7 +5,6 @@ import {
     Calculator,
     Calendar,
     CreditCard,
-    Key,
     Settings,
     Smile,
     User,
@@ -21,7 +20,7 @@ import {
     CommandSeparator,
     CommandShortcut,
 } from "@/components/ui/command"
-import AutoKeyPressing from "./setting/keyboard/auto-key-pressing"
+import { Kbd, KbdGroup } from "./ui/kbd"
 
 export function GlobalSearch() {
     const [open, setOpen] = React.useState(false)
@@ -76,14 +75,28 @@ export function GlobalSearch() {
                             <span>Billing</span>
                             <CommandShortcut>⌘B</CommandShortcut>
                         </CommandItem>
-                        <AutoKeyPressing keydata={{
-                            title: "Settings",
-                            icon: <Settings />,
-                            altKey: true,
-                            bubbles: true,
-                            keyValue: "s"
 
-                        }} />
+                        <CommandItem
+                            onSelect={() => {
+                                const event = new KeyboardEvent("keydown", {
+                                    key: 's',
+                                    altKey: true,
+                                    bubbles: true,
+                                })
+                                document.dispatchEvent(event)
+                            }}
+                        >
+                            <Settings />
+                            <span>Settings</span>
+                            <CommandShortcut>
+                                <KbdGroup className="text-xs scale-90">
+                                    <Kbd>Alt</Kbd>
+                                    <span>+</span>
+                                    <Kbd className="uppercase">s</Kbd>
+                                </KbdGroup>
+                            </CommandShortcut>
+                        </CommandItem>
+
 
                     </CommandGroup>
                 </CommandList>

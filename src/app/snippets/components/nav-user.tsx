@@ -9,10 +9,6 @@ import {
   LogOut,
   Settings2,
   Sparkles,
-  User,
-  Mail,
-  Calendar,
-  MapPin,
 } from "lucide-react"
 
 import {
@@ -35,14 +31,6 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
-import { SettingsDialog } from "./setting-dialog"
 import { Kbd, KbdGroup } from "@/components/ui/kbd"
 
 export function NavUser({
@@ -117,7 +105,14 @@ export function NavUser({
                   <Bell />
                   Notifications
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setSettingsOpen(true)}>
+                <DropdownMenuItem onSelect={() => {
+                  const event = new KeyboardEvent("keydown", {
+                    key: 's',
+                    altKey: true,
+                    bubbles: true,
+                  })
+                  document.dispatchEvent(event)
+                }}>
                   <Settings2 />
                   <div className="flex justify-between w-full">
                     <span >
@@ -142,7 +137,6 @@ export function NavUser({
         </SidebarMenuItem>
       </SidebarMenu>
 
-      <SettingsDialog setSettingsOpen={setSettingsOpen} settingsOpen={settingsOpen} />
     </>
   )
 }

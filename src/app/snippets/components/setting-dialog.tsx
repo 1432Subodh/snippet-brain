@@ -41,7 +41,6 @@ import {
   SidebarProvider,
 } from "@/components/ui/sidebar"
 import { ColorSwitcher } from "@/components/setting/Appearance/color-switcher"
-import { Kbd } from "@/components/ui/kbd" // ✅ Import Kbd component
 
 // ----------------------
 // Settings Dialog
@@ -63,8 +62,10 @@ const data = {
   ],
 }
 
-export function SettingsDialog({ settingsOpen, setSettingsOpen }: any) {
+export function SettingsDialog() {
   const [active, setActive] = React.useState("Appearance")
+    const [settingsOpen, setSettingsOpen] = React.useState(false)
+  
 
   // ✅ Keyboard shortcut (Ctrl + ,)
   React.useEffect(() => {

@@ -15,7 +15,8 @@ const ThemeColorContext = createContext<ThemeColorContextType | undefined>(
 )
 
 export function ThemeColorProvider({ children }: { children: React.ReactNode }) {
-  const { theme: mode } = useTheme()
+  // Destructure theme and resolvedTheme from useTheme
+  const { theme, resolvedTheme } = useTheme()
   const [color, setColor] = useState<string | null>(null)
 
   // Load saved color once
@@ -24,12 +25,20 @@ export function ThemeColorProvider({ children }: { children: React.ReactNode }) 
     setColor(saved)
   }, [])
 
-  // Apply theme whenever mode or color changes
+  // Apply theme whenever theme, resolvedTheme, or color changes
   useEffect(() => {
-    if (!color || !mode) return
-    applyTheme(color, mode as 'light' | 'dark')
+    if (!color || !theme) return
+
+    // Determine the actual mode to apply: resolvedTheme if 'system', otherwise theme
+    const currentMode = theme === 'system' ? resolvedTheme : (theme as 'light' | 'dark')
+
+    // Check if currentMode is valid before applying
+    if (currentMode && (currentMode === 'light' || currentMode === 'dark')) {
+      applyTheme(color, currentMode)
+    }
+
     localStorage.setItem('theme-color', color)
-  }, [color, mode])
+  }, [color, theme, resolvedTheme]) // Added resolvedTheme as a dependency
 
   if (color === null) {
     // Wait until color is loaded before rendering children
