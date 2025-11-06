@@ -21,12 +21,13 @@ import {
     CommandShortcut,
 } from "@/components/ui/command"
 import { Kbd, KbdGroup } from "./ui/kbd"
-import Link from "next/link"
 import { useRouter } from "next/navigation"
 
 export function GlobalSearch() {
     const [open, setOpen] = React.useState(false)
     const router = useRouter()
+
+
 
     React.useEffect(() => {
         const down = (e: KeyboardEvent) => {

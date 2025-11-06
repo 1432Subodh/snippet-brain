@@ -187,9 +187,9 @@ int main() {
                                         <div className="h-2.5 w-2.5 rounded-full bg-yellow-400 shadow-sm"></div>
                                         <div className="h-2.5 w-2.5 rounded-full bg-green-400 shadow-sm"></div>
                                     </div>
-                                    <span className="font-mono text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    {/* <span className="font-mono text-sm font-medium text-gray-700 dark:text-gray-300">
                                         {snippet.title}
-                                    </span>
+                                    </span> */}
                                 </div>
                                 <span className="px-2.5 py-1 rounded-md text-xs font-mono bg-gray-100/80 dark:bg-gray-800/80 text-gray-600 dark:text-gray-400 backdrop-blur-sm">
                                     {snippet.language}

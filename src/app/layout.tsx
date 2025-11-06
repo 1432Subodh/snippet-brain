@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import { ThemeColorProvider } from "../../context/theme-color-context";
 import { GlobalSearch } from "@/components/global-search";
+import ProgressBar from "@/components/setting/Appearance/route-progress";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -35,12 +36,13 @@ export default function RootLayout({
           enableSystem={true}
           storageKey="theme-mode">
           <ThemeColorProvider>
+            <GlobalSearch />
+            <ProgressBar />
             {children}
-            <GlobalSearch/>
 
           </ThemeColorProvider>
         </ThemeProvider>
-        
+
       </body>
     </html>
   );

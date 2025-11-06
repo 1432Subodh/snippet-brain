@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/sidebar"
 import { NavUser } from "./nav-user"
 import Link from "next/link"
+import SnippetList from "./all-snippet"
 
 // Simplified data for Snippet Manager
 const data = {
@@ -158,12 +159,9 @@ export  function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) 
         </SidebarHeader>
 
         <SidebarContent>
-          <SidebarGroup className="px-0">
-            <SidebarGroupContent>
-              <div className="p-6 text-sm text-muted-foreground">
-                Select a category to view snippets.
-              </div>
-              <Link href={'/snippets/test'}>got to test</Link>
+          <SidebarGroup className="px-0 pt-0">
+            <SidebarGroupContent className="">
+              <SnippetList/>
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
