@@ -6,6 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Copy, Eye, Check, MoreHorizontal, Star, Clock } from "lucide-react";
 import SnippetListSkeleton from "@/components/Skeleton/skeleton-snippet-list";
+import { DropdownMenuOfSnippetList } from "./dropdown-menu-of-snippetlist";
+
 
 
 
@@ -155,13 +157,7 @@ export default function SnippetList() {
                           </TooltipContent>
                         </Tooltip>
 
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-8 w-8 hover:bg-primary/10 hover:text-primary rounded-lg transition-all"
-                        >
-                          <MoreHorizontal className="size-3.5" />
-                        </Button>
+                        <DropdownMenuOfSnippetList/>
                       </div>
                     </div>
 
@@ -196,7 +192,7 @@ export default function SnippetList() {
               </div>
 
               {hoveredIndex === index && (
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/2 to-primary/5 transition-opacity duration-300 pointer-events-none" />
+                <div className="absolute inset-0 bg-linear-to-r from-primary/0 via-primary/2 to-primary/5 transition-opacity duration-300 pointer-events-none" />
               )}
             </div>
           ))
