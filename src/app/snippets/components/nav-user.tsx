@@ -43,7 +43,6 @@ export function NavUser({
   }
 }) {
   const { isMobile } = useSidebar()
-  const [settingsOpen, setSettingsOpen] = useState(false)
 
   return (
     <>

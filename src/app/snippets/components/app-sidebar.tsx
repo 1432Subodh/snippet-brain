@@ -17,7 +17,6 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { NavUser } from "./nav-user"
-import Link from "next/link"
 import SnippetList from "./all-snippet"
 
 // Simplified data for Snippet Manager
